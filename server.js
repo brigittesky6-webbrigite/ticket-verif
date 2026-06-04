@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
+const MongoStore = require('connect-mongo');
 const helmet = require('helmet');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
@@ -8,6 +9,8 @@ const mongoose = require('mongoose');
 const path = require('path');
 
 const app = express();
+
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ticket-verif';
 
 // ─── Security Middlewares ─────────────────────────────────────────────────────
 app.use(helmet({ contentSecurityPolicy: false }));
@@ -17,21 +20,27 @@ app.use(express.urlencoded({ extended: true }));
 
 // Rate limiting
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 15 * 60 * 1000,
   max: 100,
   message: 'Trop de requêtes, veuillez réessayer plus tard.'
 });
 app.use('/api/', limiter);
 
-// Session
+// Session persistée en MongoDB (évite la perte de session sur Render)
 app.use(session({
   secret: process.env.SESSION_SECRET || 'fallback-secret-change-in-prod',
   resave: false,
   saveUninitialized: false,
+  store: MongoStore.create({
+    mongoUrl: MONGODB_URI,
+    collectionName: 'sessions',
+    ttl: 24 * 60 * 60 // 24h en secondes
+  }),
   cookie: {
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
-    maxAge: 24 * 60 * 60 * 1000 // 24h
+    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    maxAge: 24 * 60 * 60 * 1000 // 24h en ms
   }
 }));
 
@@ -39,7 +48,7 @@ app.use(session({
 app.use(express.static(path.join(__dirname, 'public')));
 
 // ─── MongoDB Connection ───────────────────────────────────────────────────────
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/ticket-verif')
+mongoose.connect(MONGODB_URI)
   .then(() => console.log('✅ MongoDB connecté'))
   .catch(err => console.error('❌ Erreur MongoDB:', err));
 

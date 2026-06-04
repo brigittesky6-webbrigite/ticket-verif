@@ -903,8 +903,10 @@ function resetForm() {
 
 // ─── Suivi ────────────────────────────────────────────────────────────────────
 async function suivreTicket() {
-  const ref = document.getElementById('suiviRef').value.trim().toUpperCase();
-  if (!ref || ref.length < 6) return showToast('Entrez une référence valide', 'error');
+  const input = document.getElementById('suiviRef');
+  const ref = input.value.trim().toUpperCase();
+  input.value = ref; // force la valeur en majuscules
+  if (!ref || ref.length < 4) return showToast('Entrez une référence valide', 'error');
 
   const card = document.getElementById('statusResult');
   const content = document.getElementById('statusContent');
@@ -912,7 +914,7 @@ async function suivreTicket() {
   card.style.display = 'block';
 
   try {
-    const res = await fetch('/api/tickets/suivi/' + ref);
+    const res = await fetch('/api/tickets/suivi/' + encodeURIComponent(ref));
     const data = await res.json();
 
     if (!res.ok) {
