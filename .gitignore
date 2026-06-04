@@ -1,0 +1,17 @@
+# Dépendances Node
+node_modules/
+
+# Variables d'environnement (NE JAMAIS publier !)
+.env
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
