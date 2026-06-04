@@ -8,537 +8,167 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #080810;
-      --surface: #0f0f1a;
-      --surface2: #16162a;
-      --border: #252540;
-      --accent: #7c6dfa;
-      --accent2: #f470b8;
-      --success: #2ed47a;
-      --warning: #f5a623;
-      --error: #ff5a5a;
-      --text: #e8e8f0;
-      --muted: #6b6b8a;
-      --mono: 'Space Mono', monospace;
-      --sans: 'Syne', sans-serif;
+      --bg: #080810; --surface: #0f0f1a; --surface2: #16162a; --border: #252540;
+      --accent: #7c6dfa; --accent2: #f470b8; --success: #2ed47a;
+      --warning: #f5a623; --error: #ff5a5a; --text: #e8e8f0; --muted: #6b6b8a;
+      --mono: 'Space Mono', monospace; --sans: 'Syne', sans-serif;
     }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: var(--sans);
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
-
-    /* Background grid */
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body { font-family:var(--sans); background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
     body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(124,109,250,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(124,109,250,0.04) 1px, transparent 1px);
-      background-size: 50px 50px;
-      pointer-events: none;
-      z-index: 0;
+      content:''; position:fixed; inset:0;
+      background-image: linear-gradient(rgba(124,109,250,0.04) 1px,transparent 1px), linear-gradient(90deg,rgba(124,109,250,0.04) 1px,transparent 1px);
+      background-size:50px 50px; pointer-events:none; z-index:0;
     }
+    .orb { position:fixed; border-radius:50%; filter:blur(120px); pointer-events:none; z-index:0; }
+    .orb-1 { width:500px; height:500px; background:rgba(124,109,250,0.12); top:-200px; right:-100px; }
+    .orb-2 { width:400px; height:400px; background:rgba(244,112,184,0.08); bottom:-100px; left:-100px; }
 
-    /* Glow orbs */
-    .orb {
-      position: fixed;
-      border-radius: 50%;
-      filter: blur(120px);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .orb-1 { width: 500px; height: 500px; background: rgba(124,109,250,0.12); top: -200px; right: -100px; }
-    .orb-2 { width: 400px; height: 400px; background: rgba(244,112,184,0.08); bottom: -100px; left: -100px; }
-
-    /* ── Nav ── */
+    /* NAV */
     nav {
-      position: relative; z-index: 10;
-      padding: 20px 40px;
-      display: flex; align-items: center; justify-content: space-between;
-      border-bottom: 1px solid var(--border);
-      background: rgba(8,8,16,0.8);
-      backdrop-filter: blur(20px);
-      position: sticky; top: 0;
+      z-index:100; padding:16px 32px;
+      display:flex; align-items:center; justify-content:space-between;
+      border-bottom:1px solid var(--border);
+      background:rgba(8,8,16,0.9); backdrop-filter:blur(20px);
+      position:sticky; top:0;
     }
-    .logo {
-      font-size: 20px; font-weight: 800; color: white;
-      display: flex; align-items: center; gap: 10px;
-    }
-    .logo-icon {
-      width: 36px; height: 36px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
-    }
-    .nav-links { display: flex; gap: 8px; }
-    .nav-btn {
-      padding: 8px 18px;
-      border-radius: 8px;
-      font-family: var(--sans);
-      font-size: 14px; font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: none;
-    }
-    .nav-btn-ghost {
-      background: transparent;
-      color: var(--muted);
-      border: 1px solid var(--border);
-    }
-    .nav-btn-ghost:hover { color: white; border-color: var(--accent); }
-    .nav-btn-primary {
-      background: var(--accent);
-      color: white;
-    }
-    .nav-btn-primary:hover { background: #9080ff; }
+    .logo { font-size:20px; font-weight:800; color:white; display:flex; align-items:center; gap:10px; cursor:pointer; }
+    .logo-icon { width:36px; height:36px; background:linear-gradient(135deg,var(--accent),var(--accent2)); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:18px; }
+    .nav-links { display:flex; gap:8px; align-items:center; }
+    .nav-btn { padding:8px 16px; border-radius:8px; font-family:var(--sans); font-size:13px; font-weight:600; cursor:pointer; transition:all 0.2s; border:none; }
+    .nav-btn-ghost { background:transparent; color:var(--muted); border:1px solid var(--border); }
+    .nav-btn-ghost:hover { color:white; border-color:var(--accent); }
+    .nav-btn-primary { background:var(--accent); color:white; }
+    .nav-btn-primary:hover { background:#9080ff; }
+    .nav-btn-admin { background:transparent; color:var(--muted); border:1px solid var(--border); font-size:12px; }
+    .nav-btn-admin:hover { color:var(--warning); border-color:var(--warning); }
 
-    /* ── Pages ── */
-    .page { display: none; position: relative; z-index: 1; }
-    .page.active { display: block; }
+    /* PAGES */
+    .page { display:none; position:relative; z-index:1; }
+    .page.active { display:block; }
 
-    /* ── Hero ── */
-    .hero {
-      text-align: center;
-      padding: 100px 20px 60px;
-      max-width: 700px;
-      margin: 0 auto;
-    }
-    .hero-tag {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(124,109,250,0.1);
-      border: 1px solid rgba(124,109,250,0.3);
-      color: var(--accent);
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 13px; font-weight: 600;
-      margin-bottom: 24px;
-      font-family: var(--mono);
-    }
-    .hero h1 {
-      font-size: clamp(36px, 6vw, 64px);
-      font-weight: 800;
-      line-height: 1.1;
-      margin-bottom: 20px;
-      background: linear-gradient(135deg, #fff 30%, var(--accent) 80%, var(--accent2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    .hero p {
-      font-size: 18px;
-      color: var(--muted);
-      line-height: 1.7;
-      margin-bottom: 40px;
-    }
-    .hero-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
-    .btn {
-      padding: 14px 28px;
-      border-radius: 10px;
-      font-family: var(--sans);
-      font-size: 15px; font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: none;
-      display: inline-flex; align-items: center; gap: 8px;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: white;
-      box-shadow: 0 8px 30px rgba(124,109,250,0.3);
-    }
-    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(124,109,250,0.4); }
-    .btn-ghost {
-      background: transparent;
-      color: white;
-      border: 1px solid var(--border);
-    }
-    .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+    /* HERO */
+    .hero { text-align:center; padding:90px 20px 50px; max-width:700px; margin:0 auto; }
+    .hero-tag { display:inline-flex; align-items:center; gap:8px; background:rgba(124,109,250,0.1); border:1px solid rgba(124,109,250,0.3); color:var(--accent); padding:6px 16px; border-radius:20px; font-size:13px; font-weight:600; margin-bottom:24px; font-family:var(--mono); }
+    .hero h1 { font-size:clamp(32px,6vw,60px); font-weight:800; line-height:1.1; margin-bottom:20px; background:linear-gradient(135deg,#fff 30%,var(--accent) 80%,var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .hero p { font-size:17px; color:var(--muted); line-height:1.7; margin-bottom:36px; }
+    .hero-actions { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    .btn { padding:13px 26px; border-radius:10px; font-family:var(--sans); font-size:15px; font-weight:700; cursor:pointer; transition:all 0.2s; border:none; display:inline-flex; align-items:center; gap:8px; }
+    .btn-primary { background:linear-gradient(135deg,var(--accent),var(--accent2)); color:white; box-shadow:0 8px 30px rgba(124,109,250,0.3); }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(124,109,250,0.4); }
+    .btn-ghost { background:transparent; color:white; border:1px solid var(--border); }
+    .btn-ghost:hover { border-color:var(--accent); color:var(--accent); }
 
-    /* ── Operators grid ── */
-    .operators-section { max-width: 900px; margin: 0 auto; padding: 0 20px 80px; }
-    .section-label {
-      text-align: center;
-      color: var(--muted);
-      font-size: 13px;
-      font-family: var(--mono);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: 30px;
-    }
-    .operators-grid {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      justify-content: center;
-    }
-    .op-chip {
-      padding: 10px 20px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      font-size: 14px; font-weight: 600;
-      color: var(--muted);
-      transition: all 0.2s;
-    }
-    .op-chip:hover { border-color: var(--accent); color: white; }
+    /* OPERATORS */
+    .operators-section { max-width:900px; margin:0 auto; padding:0 20px 80px; }
+    .section-label { text-align:center; color:var(--muted); font-size:12px; font-family:var(--mono); text-transform:uppercase; letter-spacing:2px; margin-bottom:24px; }
+    .operators-grid { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+    .op-chip { padding:10px 20px; background:var(--surface); border:1px solid var(--border); border-radius:8px; font-size:14px; font-weight:600; color:var(--muted); transition:all 0.2s; }
+    .op-chip:hover { border-color:var(--accent); color:white; }
 
-    /* ── Form Page ── */
-    .form-container {
-      max-width: 580px;
-      margin: 60px auto;
-      padding: 0 20px 80px;
-    }
-    .form-header { margin-bottom: 40px; }
-    .form-header h2 { font-size: 32px; font-weight: 800; margin-bottom: 10px; }
-    .form-header p { color: var(--muted); font-size: 15px; }
+    /* FORM */
+    .form-container { max-width:580px; margin:60px auto; padding:0 20px 80px; }
+    .form-header { margin-bottom:36px; }
+    .form-header h2 { font-size:30px; font-weight:800; margin-bottom:8px; }
+    .form-header p { color:var(--muted); font-size:15px; }
+    .form-card { background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:32px; }
+    .form-section-title { font-size:11px; font-family:var(--mono); text-transform:uppercase; letter-spacing:2px; color:var(--accent); margin-bottom:20px; padding-bottom:10px; border-bottom:1px solid var(--border); }
+    .form-group { margin-bottom:18px; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    label { display:block; font-size:12px; font-weight:600; color:var(--muted); margin-bottom:7px; text-transform:uppercase; letter-spacing:0.5px; }
+    label .req { color:var(--accent2); }
+    input, select, textarea { width:100%; background:var(--surface2); border:1px solid var(--border); border-radius:10px; padding:12px 14px; color:var(--text); font-family:var(--sans); font-size:14px; transition:all 0.2s; appearance:none; -webkit-appearance:none; }
+    input:focus, select:focus, textarea:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(124,109,250,0.15); }
+    select { background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6b8a' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat:no-repeat; background-position:right 14px center; padding-right:38px; cursor:pointer; }
+    select option { background:var(--surface2); }
+    .form-divider { margin:24px 0; border:none; border-top:1px solid var(--border); }
+    .ticket-code-input { font-family:var(--mono) !important; font-size:16px !important; letter-spacing:2px; text-transform:uppercase; }
+    .submit-btn { width:100%; padding:15px; background:linear-gradient(135deg,var(--accent),var(--accent2)); color:white; border:none; border-radius:12px; font-family:var(--sans); font-size:15px; font-weight:700; cursor:pointer; transition:all 0.2s; margin-top:24px; }
+    .submit-btn:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(124,109,250,0.4); }
+    .submit-btn:disabled { opacity:0.6; cursor:not-allowed; transform:none; }
 
-    .form-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 36px;
-    }
+    /* SUCCESS */
+    .success-card { text-align:center; padding:40px 20px; }
+    .success-icon { width:72px; height:72px; background:rgba(46,212,122,0.1); border:2px solid rgba(46,212,122,0.3); border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:32px; margin:0 auto 20px; animation:pop 0.5s cubic-bezier(0.175,0.885,0.32,1.275); }
+    @keyframes pop { from{transform:scale(0);opacity:0} to{transform:scale(1);opacity:1} }
+    .ref-display { background:var(--surface2); border:2px solid var(--accent); border-radius:12px; padding:18px; margin:20px 0; }
+    .ref-display p { color:var(--muted); font-size:12px; font-family:var(--mono); margin-bottom:6px; }
+    .ref-display .ref-code { font-size:32px; font-weight:800; font-family:var(--mono); color:var(--accent); letter-spacing:4px; }
 
-    .form-section-title {
-      font-size: 11px;
-      font-family: var(--mono);
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: var(--accent);
-      margin-bottom: 20px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid var(--border);
-    }
+    /* SUIVI */
+    .suivi-container { max-width:500px; margin:70px auto; padding:0 20px; }
+    .status-card { background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:32px; margin-top:20px; }
+    .status-badge { display:inline-flex; align-items:center; gap:8px; padding:8px 18px; border-radius:20px; font-size:13px; font-weight:700; font-family:var(--mono); }
+    .badge-waiting { background:rgba(245,166,35,0.1); color:var(--warning); border:1px solid rgba(245,166,35,0.3); }
+    .badge-valid { background:rgba(46,212,122,0.1); color:var(--success); border:1px solid rgba(46,212,122,0.3); }
+    .badge-refused { background:rgba(255,90,90,0.1); color:var(--error); border:1px solid rgba(255,90,90,0.3); }
+    .badge-processing { background:rgba(124,109,250,0.1); color:var(--accent); border:1px solid rgba(124,109,250,0.3); }
 
-    .form-group { margin-bottom: 20px; }
-    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    /* ADMIN */
+    .admin-container { max-width:1100px; margin:0 auto; padding:36px 20px 80px; }
+    .admin-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:28px; flex-wrap:wrap; gap:12px; }
+    .admin-header h2 { font-size:26px; font-weight:800; }
+    .stats-row { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:14px; margin-bottom:28px; }
+    .stat-card { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:18px; }
+    .stat-card .stat-val { font-size:28px; font-weight:800; font-family:var(--mono); }
+    .stat-card .stat-label { color:var(--muted); font-size:11px; margin-top:4px; }
+    .filter-tabs { display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap; }
+    .filter-tab { padding:7px 14px; background:var(--surface); border:1px solid var(--border); border-radius:8px; color:var(--muted); font-family:var(--sans); font-size:12px; font-weight:600; cursor:pointer; transition:all 0.2s; }
+    .filter-tab.active { background:var(--accent); color:white; border-color:var(--accent); }
+    .tickets-table { background:var(--surface); border:1px solid var(--border); border-radius:16px; overflow:hidden; }
+    .table-header { display:grid; grid-template-columns:100px 1fr 120px 100px 90px 120px; padding:12px 18px; background:var(--surface2); border-bottom:1px solid var(--border); font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:1px; color:var(--muted); }
+    .ticket-row { display:grid; grid-template-columns:100px 1fr 120px 100px 90px 120px; padding:14px 18px; border-bottom:1px solid var(--border); align-items:center; transition:background 0.15s; cursor:pointer; }
+    .ticket-row:hover { background:var(--surface2); }
+    .ticket-row:last-child { border-bottom:none; }
+    .ticket-ref { font-family:var(--mono); font-size:12px; color:var(--accent); font-weight:700; }
+    .ticket-email { font-size:12px; color:var(--muted); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; padding-right:10px; }
+    .ticket-amount { font-weight:700; font-size:13px; }
+    .ticket-date { font-size:11px; color:var(--muted); font-family:var(--mono); }
+    .ticket-actions { display:flex; gap:5px; }
+    .action-btn { padding:4px 10px; border-radius:6px; font-size:11px; font-weight:600; cursor:pointer; border:none; transition:all 0.15s; font-family:var(--sans); }
+    .btn-detail { background:rgba(124,109,250,0.15); color:var(--accent); }
+    .btn-detail:hover { background:var(--accent); color:white; }
 
-    label {
-      display: block;
-      font-size: 13px; font-weight: 600;
-      color: var(--muted);
-      margin-bottom: 8px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-    label .req { color: var(--accent2); }
+    /* LOGIN */
+    .login-container { max-width:360px; margin:100px auto; padding:0 20px; }
+    .login-card { background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:36px; text-align:center; }
 
-    input, select {
-      width: 100%;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 16px;
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 15px;
-      transition: all 0.2s;
-      appearance: none;
-    }
-    input:focus, select:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(124,109,250,0.15);
-    }
-    select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b6b8a' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      padding-right: 40px;
-      cursor: pointer;
-    }
-    select option { background: var(--surface2); }
+    /* MODAL */
+    .modal-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px); z-index:200; align-items:center; justify-content:center; padding:20px; }
+    .modal-overlay.open { display:flex; }
+    .modal { background:var(--surface); border:1px solid var(--border); border-radius:20px; padding:32px; max-width:480px; width:100%; animation:slideUp 0.3s ease; max-height:90vh; overflow-y:auto; }
+    @keyframes slideUp { from{transform:translateY(20px);opacity:0} to{transform:translateY(0);opacity:1} }
+    .modal h3 { font-size:19px; font-weight:800; margin-bottom:18px; }
+    .modal-info-row { display:flex; justify-content:space-between; padding:9px 0; border-bottom:1px solid var(--border); font-size:13px; }
+    .modal-info-row span:first-child { color:var(--muted); }
+    .modal-info-row span:last-child { font-weight:600; font-family:var(--mono); word-break:break-all; text-align:right; margin-left:10px; }
+    .modal-actions { display:flex; gap:8px; margin-top:20px; flex-wrap:wrap; }
+    .modal-btn { flex:1; padding:11px; border-radius:10px; font-family:var(--sans); font-size:13px; font-weight:700; cursor:pointer; border:none; transition:all 0.2s; min-width:80px; }
+    .modal-btn-validate { background:var(--success); color:#0a0a0f; }
+    .modal-btn-validate:hover { opacity:0.85; }
+    .modal-btn-reject { background:var(--error); color:white; }
+    .modal-btn-reject:hover { opacity:0.85; }
+    .modal-btn-close { background:var(--surface2); color:var(--muted); border:1px solid var(--border); }
+    textarea { resize:vertical; min-height:75px; margin-top:14px; }
 
-    .form-divider { margin: 28px 0; border: none; border-top: 1px solid var(--border); }
+    /* TOAST */
+    .toast { position:fixed; bottom:24px; right:24px; background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:12px 18px; font-size:13px; font-weight:600; display:flex; align-items:center; gap:10px; transform:translateY(100px); opacity:0; transition:all 0.3s; z-index:1000; max-width:300px; }
+    .toast.show { transform:translateY(0); opacity:1; }
+    .toast.success { border-color:rgba(46,212,122,0.4); color:var(--success); }
+    .toast.error { border-color:rgba(255,90,90,0.4); color:var(--error); }
 
-    .ticket-code-input {
-      font-family: var(--mono) !important;
-      font-size: 18px !important;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-    }
+    /* SPINNER */
+    .spinner { width:18px; height:18px; border:3px solid rgba(255,255,255,0.2); border-top-color:white; border-radius:50%; animation:spin 0.8s linear infinite; display:inline-block; vertical-align:middle; }
+    @keyframes spin { to{transform:rotate(360deg)} }
 
-    .submit-btn {
-      width: 100%;
-      padding: 16px;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
-      color: white;
-      border: none;
-      border-radius: 12px;
-      font-family: var(--sans);
-      font-size: 16px; font-weight: 700;
-      cursor: pointer;
-      transition: all 0.2s;
-      margin-top: 28px;
-      position: relative;
-      overflow: hidden;
-    }
-    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(124,109,250,0.4); }
-    .submit-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+    .empty-state { text-align:center; padding:50px 20px; color:var(--muted); }
+    .empty-state .empty-icon { font-size:42px; margin-bottom:14px; }
 
-    /* ── Success State ── */
-    .success-card {
-      text-align: center;
-      padding: 50px 30px;
-    }
-    .success-icon {
-      width: 80px; height: 80px;
-      background: rgba(46,212,122,0.1);
-      border: 2px solid rgba(46,212,122,0.3);
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 36px;
-      margin: 0 auto 24px;
-      animation: pop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    @keyframes pop { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
-    .ref-display {
-      background: var(--surface2);
-      border: 2px solid var(--accent);
-      border-radius: 12px;
-      padding: 20px;
-      margin: 24px 0;
-    }
-    .ref-display p { color: var(--muted); font-size: 12px; font-family: var(--mono); margin-bottom: 6px; }
-    .ref-display .ref-code {
-      font-size: 36px; font-weight: 800;
-      font-family: var(--mono);
-      color: var(--accent);
-      letter-spacing: 4px;
-    }
-
-    /* ── Suivi Page ── */
-    .suivi-container {
-      max-width: 500px;
-      margin: 80px auto;
-      padding: 0 20px;
-    }
-    .status-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 36px;
-      margin-top: 24px;
-    }
-    .status-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 8px 18px;
-      border-radius: 20px;
-      font-size: 14px; font-weight: 700;
-      font-family: var(--mono);
-    }
-    .badge-waiting { background: rgba(245,166,35,0.1); color: var(--warning); border: 1px solid rgba(245,166,35,0.3); }
-    .badge-valid { background: rgba(46,212,122,0.1); color: var(--success); border: 1px solid rgba(46,212,122,0.3); }
-    .badge-refused { background: rgba(255,90,90,0.1); color: var(--error); border: 1px solid rgba(255,90,90,0.3); }
-    .badge-processing { background: rgba(124,109,250,0.1); color: var(--accent); border: 1px solid rgba(124,109,250,0.3); }
-
-    /* ── Admin Page ── */
-    .admin-container {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 40px 20px 80px;
-    }
-    .admin-header {
-      display: flex; align-items: center; justify-content: space-between;
-      margin-bottom: 32px;
-    }
-    .admin-header h2 { font-size: 28px; font-weight: 800; }
-
-    .stats-row {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 16px;
-      margin-bottom: 32px;
-    }
-    .stat-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 20px;
-    }
-    .stat-card .stat-val { font-size: 32px; font-weight: 800; font-family: var(--mono); }
-    .stat-card .stat-label { color: var(--muted); font-size: 12px; margin-top: 4px; }
-
-    .filter-tabs {
-      display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;
-    }
-    .filter-tab {
-      padding: 8px 16px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      color: var(--muted);
-      font-family: var(--sans); font-size: 13px; font-weight: 600;
-      cursor: pointer; transition: all 0.2s;
-    }
-    .filter-tab.active { background: var(--accent); color: white; border-color: var(--accent); }
-
-    .tickets-table {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 16px;
-      overflow: hidden;
-    }
-    .table-header {
-      display: grid;
-      grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 1fr;
-      padding: 14px 20px;
-      background: var(--surface2);
-      border-bottom: 1px solid var(--border);
-      font-size: 11px; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 1px;
-      color: var(--muted);
-    }
-    .ticket-row {
-      display: grid;
-      grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr 1fr;
-      padding: 16px 20px;
-      border-bottom: 1px solid var(--border);
-      align-items: center;
-      transition: background 0.15s;
-      cursor: pointer;
-    }
-    .ticket-row:hover { background: var(--surface2); }
-    .ticket-row:last-child { border-bottom: none; }
-    .ticket-ref { font-family: var(--mono); font-size: 13px; color: var(--accent); font-weight: 700; }
-    .ticket-email { font-size: 13px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .ticket-amount { font-weight: 700; font-size: 14px; }
-    .ticket-date { font-size: 12px; color: var(--muted); font-family: var(--mono); }
-    .ticket-actions { display: flex; gap: 6px; }
-    .action-btn {
-      padding: 5px 12px;
-      border-radius: 6px;
-      font-size: 12px; font-weight: 600;
-      cursor: pointer; border: none;
-      transition: all 0.15s; font-family: var(--sans);
-    }
-    .btn-validate { background: rgba(46,212,122,0.15); color: var(--success); }
-    .btn-validate:hover { background: var(--success); color: white; }
-    .btn-reject { background: rgba(255,90,90,0.15); color: var(--error); }
-    .btn-reject:hover { background: var(--error); color: white; }
-    .btn-detail { background: rgba(124,109,250,0.15); color: var(--accent); }
-    .btn-detail:hover { background: var(--accent); color: white; }
-
-    /* ── Modal ── */
-    .modal-overlay {
-      display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(8px);
-      z-index: 100;
-      align-items: center; justify-content: center;
-      padding: 20px;
-    }
-    .modal-overlay.open { display: flex; }
-    .modal {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 36px;
-      max-width: 480px;
-      width: 100%;
-      animation: slideUp 0.3s ease;
-    }
-    @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    .modal h3 { font-size: 20px; font-weight: 800; margin-bottom: 20px; }
-    .modal-info-row {
-      display: flex; justify-content: space-between;
-      padding: 10px 0;
-      border-bottom: 1px solid var(--border);
-      font-size: 14px;
-    }
-    .modal-info-row span:first-child { color: var(--muted); }
-    .modal-info-row span:last-child { font-weight: 600; font-family: var(--mono); }
-    .modal-actions { display: flex; gap: 10px; margin-top: 24px; flex-wrap: wrap; }
-    .modal-btn {
-      flex: 1; padding: 12px;
-      border-radius: 10px;
-      font-family: var(--sans); font-size: 14px; font-weight: 700;
-      cursor: pointer; border: none; transition: all 0.2s;
-      min-width: 100px;
-    }
-    .modal-btn-validate { background: var(--success); color: #0a0a0f; }
-    .modal-btn-reject { background: var(--error); color: white; }
-    .modal-btn-close { background: var(--surface2); color: var(--muted); border: 1px solid var(--border); }
-
-    textarea {
-      width: 100%;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 12px 16px;
-      color: var(--text);
-      font-family: var(--sans);
-      font-size: 14px;
-      resize: vertical;
-      min-height: 80px;
-      margin-top: 16px;
-    }
-    textarea:focus { outline: none; border-color: var(--accent); }
-
-    /* ── Login ── */
-    .login-container {
-      max-width: 380px;
-      margin: 120px auto;
-      padding: 0 20px;
-    }
-    .login-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 20px;
-      padding: 40px;
-      text-align: center;
-    }
-
-    /* ── Toast ── */
-    .toast {
-      position: fixed; bottom: 30px; right: 30px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 20px;
-      font-size: 14px; font-weight: 600;
-      display: flex; align-items: center; gap: 10px;
-      transform: translateY(100px);
-      opacity: 0;
-      transition: all 0.3s;
-      z-index: 1000;
-      max-width: 320px;
-    }
-    .toast.show { transform: translateY(0); opacity: 1; }
-    .toast.success { border-color: rgba(46,212,122,0.4); color: var(--success); }
-    .toast.error { border-color: rgba(255,90,90,0.4); color: var(--error); }
-
-    /* ── Loader ── */
-    .spinner {
-      width: 20px; height: 20px;
-      border: 3px solid rgba(255,255,255,0.2);
-      border-top-color: white;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
-      display: inline-block;
-    }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .empty-state {
-      text-align: center;
-      padding: 60px 20px;
-      color: var(--muted);
-    }
-    .empty-state .empty-icon { font-size: 48px; margin-bottom: 16px; }
-
-    @media (max-width: 640px) {
-      nav { padding: 16px 20px; }
-      .form-row { grid-template-columns: 1fr; }
-      .table-header, .ticket-row { grid-template-columns: 1fr 1fr; }
-      .table-header span:nth-child(n+3), .ticket-row > *:nth-child(n+3):not(.ticket-actions) { display: none; }
+    @media(max-width:700px) {
+      nav { padding:14px 16px; }
+      .table-header, .ticket-row { grid-template-columns:80px 1fr 90px; }
+      .table-header span:nth-child(n+4), .ticket-row > *:nth-child(n+4):not(.ticket-actions) { display:none; }
+      .form-row { grid-template-columns:1fr; }
     }
   </style>
 </head>
@@ -547,19 +177,20 @@
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
 
-<!-- Navigation -->
+<!-- NAV -->
 <nav>
-  <div class="logo" onclick="showPage('home')" style="cursor:pointer">
+  <div class="logo" onclick="showPage('home')">
     <div class="logo-icon">🎫</div>
     TicketVerif
   </div>
   <div class="nav-links">
     <button class="nav-btn nav-btn-ghost" onclick="showPage('suivi')">📍 Suivi</button>
-    <button class="nav-btn nav-btn-primary" onclick="showPage('form')">Soumettre un ticket</button>
+    <button class="nav-btn nav-btn-primary" onclick="showPage('form')">Soumettre</button>
+    <button class="nav-btn nav-btn-admin" onclick="showPage('admin')">🔐 Admin</button>
   </div>
 </nav>
 
-<!-- ══ PAGE HOME ══════════════════════════════════════════════════════════════ -->
+<!-- ═══ HOME ════════════════════════════════════════════════════════════════════ -->
 <div class="page active" id="page-home">
   <div class="hero">
     <div class="hero-tag">🔐 Service sécurisé de vérification</div>
@@ -570,7 +201,6 @@
       <button class="btn btn-ghost" onclick="showPage('suivi')">📍 Suivre ma demande</button>
     </div>
   </div>
-
   <div class="operators-section">
     <p class="section-label">Opérateurs acceptés</p>
     <div class="operators-grid">
@@ -586,18 +216,15 @@
   </div>
 </div>
 
-<!-- ══ PAGE FORMULAIRE ════════════════════════════════════════════════════════ -->
+<!-- ═══ FORMULAIRE ══════════════════════════════════════════════════════════════ -->
 <div class="page" id="page-form">
   <div class="form-container">
     <div class="form-header">
       <h2>Soumettre un ticket</h2>
-      <p>Remplissez le formulaire ci-dessous. Vous recevrez une confirmation par email.</p>
+      <p>Remplissez le formulaire. Vous recevrez une confirmation par email.</p>
     </div>
-
     <div class="form-card" id="form-main">
-      <!-- Section 1: Infos utilisateur -->
       <div class="form-section-title">01 — Vos coordonnées</div>
-
       <div class="form-row">
         <div class="form-group">
           <label>Nom complet <span class="req">*</span></label>
@@ -605,25 +232,22 @@
         </div>
         <div class="form-group">
           <label>Téléphone</label>
-          <div style="display:flex; gap:8px">
-            <select id="phoneCountry" style="width:110px; flex-shrink:0; padding:12px 10px" onchange="updatePhonePlaceholder()">
+          <div style="display:flex;gap:8px">
+            <select id="phoneCountry" style="width:100px;flex-shrink:0;padding:12px 8px" onchange="updatePhonePlaceholder()">
               <option value="FR">🇫🇷 +33</option>
               <option value="US">🇺🇸 +1</option>
             </select>
             <input type="tel" id="userPhone" placeholder="06 12 34 56 78" style="flex:1" oninput="formatPhone(this)" maxlength="18" />
           </div>
-          <p id="phoneHint" style="font-size:11px; color:var(--muted); margin-top:5px">Format : 06 12 34 56 78</p>
+          <p id="phoneHint" style="font-size:11px;color:var(--muted);margin-top:4px">Format : 06 12 34 56 78</p>
         </div>
       </div>
-
       <div class="form-group">
         <label>Adresse email <span class="req">*</span></label>
         <input type="email" id="userEmail" placeholder="jean@exemple.com" />
       </div>
 
       <hr class="form-divider">
-
-      <!-- Section 2: Infos ticket -->
       <div class="form-section-title">02 — Informations du ticket</div>
 
       <div class="form-row">
@@ -665,34 +289,28 @@
           <option value="USD">🇺🇸 USD — Dollar américain</option>
         </select>
       </div>
-
       <div class="form-group">
         <label>Code du ticket <span class="req">*</span></label>
         <input type="text" id="codeTicket" class="ticket-code-input" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="30" />
       </div>
-
       <div class="form-group">
         <label>Numéro de série <span style="color:#555">(optionnel)</span></label>
         <input type="text" id="numeroserie" class="ticket-code-input" placeholder="N° de série si disponible" />
       </div>
-
-      <button class="submit-btn" id="submitBtn" onclick="submitTicket()">
-        Envoyer ma demande →
-      </button>
+      <button class="submit-btn" id="submitBtn" onclick="submitTicket()">Envoyer ma demande →</button>
     </div>
 
-    <!-- Success state -->
+    <!-- Succès -->
     <div class="form-card" id="form-success" style="display:none">
       <div class="success-card">
         <div class="success-icon">✅</div>
-        <h3 style="font-size:24px; font-weight:800; margin-bottom:10px">Demande envoyée !</h3>
-        <p style="color:var(--muted); margin-bottom:4px">Un email de confirmation vous a été envoyé.</p>
-        <p style="color:var(--muted)">Votre numéro de suivi :</p>
+        <h3 style="font-size:22px;font-weight:800;margin-bottom:10px">Demande envoyée !</h3>
+        <p style="color:var(--muted);margin-bottom:4px">Un email de confirmation vous a été envoyé.</p>
         <div class="ref-display">
-          <p>RÉFÉRENCE</p>
+          <p>RÉFÉRENCE DE SUIVI</p>
           <div class="ref-code" id="successRef">—</div>
         </div>
-        <p style="color:var(--muted); font-size:14px; margin-bottom:24px">Conservez cette référence pour suivre votre demande.</p>
+        <p style="color:var(--muted);font-size:13px;margin-bottom:20px">Conservez cette référence pour suivre votre demande.</p>
         <button class="btn btn-primary" onclick="resetForm()">Soumettre un autre ticket</button>
         &nbsp;
         <button class="btn btn-ghost" onclick="showPage('suivi')">Suivre ma demande</button>
@@ -701,42 +319,40 @@
   </div>
 </div>
 
-<!-- ══ PAGE SUIVI ═════════════════════════════════════════════════════════════ -->
+<!-- ═══ SUIVI ════════════════════════════════════════════════════════════════════ -->
 <div class="page" id="page-suivi">
   <div class="suivi-container">
     <div class="form-header">
       <h2>Suivi de demande</h2>
       <p>Entrez votre référence pour connaître l'état de votre ticket.</p>
     </div>
-
     <div class="form-card">
       <div class="form-group">
         <label>Votre référence <span class="req">*</span></label>
-        <input type="text" id="suiviRef" class="ticket-code-input" placeholder="ex: A3F82B1C" style="text-transform:uppercase" maxlength="10" />
+        <input type="text" id="suiviRef" class="ticket-code-input" placeholder="ex: A3F82B1C" maxlength="10" oninput="this.value=this.value.toUpperCase()" />
       </div>
-      <button class="btn btn-primary" style="width:100%" onclick="suivreTicket()">Rechercher</button>
+      <button class="btn btn-primary" style="width:100%;margin-top:4px" onclick="suivreTicket()">Rechercher</button>
     </div>
-
     <div class="status-card" id="statusResult" style="display:none">
       <div id="statusContent"></div>
     </div>
   </div>
 </div>
 
-<!-- ══ PAGE ADMIN ═════════════════════════════════════════════════════════════ -->
+<!-- ═══ ADMIN ════════════════════════════════════════════════════════════════════ -->
 <div class="page" id="page-admin">
   <!-- Login -->
   <div id="admin-login">
     <div class="login-container">
       <div class="login-card">
-        <div style="font-size:40px; margin-bottom:20px">🔐</div>
-        <h2 style="font-size:24px; font-weight:800; margin-bottom:8px">Panel Admin</h2>
-        <p style="color:var(--muted); margin-bottom:30px; font-size:14px">Accès réservé aux administrateurs</p>
-        <div class="form-group">
+        <div style="font-size:40px;margin-bottom:16px">🔐</div>
+        <h2 style="font-size:22px;font-weight:800;margin-bottom:8px">Panel Admin</h2>
+        <p style="color:var(--muted);margin-bottom:26px;font-size:14px">Accès réservé aux administrateurs</p>
+        <div class="form-group" style="text-align:left">
           <label>Mot de passe</label>
           <input type="password" id="adminPassword" placeholder="••••••••" onkeydown="if(event.key==='Enter') adminLogin()" />
         </div>
-        <button class="submit-btn" onclick="adminLogin()">Se connecter</button>
+        <button class="submit-btn" id="loginBtn" onclick="adminLogin()">Se connecter</button>
       </div>
     </div>
   </div>
@@ -746,35 +362,28 @@
     <div class="admin-container">
       <div class="admin-header">
         <h2>🎫 Gestion des tickets</h2>
-        <button class="btn btn-ghost" onclick="adminLogout()" style="font-size:14px; padding:10px 18px">Déconnexion</button>
+        <div style="display:flex;gap:8px;align-items:center">
+          <button class="btn btn-ghost" onclick="loadTickets(null)" style="font-size:13px;padding:9px 16px">🔄 Actualiser</button>
+          <button class="btn btn-ghost" onclick="adminLogout()" style="font-size:13px;padding:9px 16px">Déconnexion</button>
+        </div>
       </div>
-
-      <!-- Stats -->
-      <div class="stats-row" id="adminStats">
+      <div class="stats-row">
         <div class="stat-card"><div class="stat-val" id="stat-total">—</div><div class="stat-label">Total</div></div>
         <div class="stat-card"><div class="stat-val" style="color:var(--warning)" id="stat-waiting">—</div><div class="stat-label">En attente</div></div>
         <div class="stat-card"><div class="stat-val" style="color:var(--success)" id="stat-valid">—</div><div class="stat-label">Validés</div></div>
         <div class="stat-card"><div class="stat-val" style="color:var(--error)" id="stat-refused">—</div><div class="stat-label">Refusés</div></div>
       </div>
-
-      <!-- Filters -->
       <div class="filter-tabs">
-        <button class="filter-tab active" onclick="loadTickets(null, this)">Tous</button>
-        <button class="filter-tab" onclick="loadTickets('en_attente', this)">⏳ En attente</button>
-        <button class="filter-tab" onclick="loadTickets('en_cours', this)">🔄 En cours</button>
-        <button class="filter-tab" onclick="loadTickets('valide', this)">✅ Validés</button>
-        <button class="filter-tab" onclick="loadTickets('refuse', this)">❌ Refusés</button>
+        <button class="filter-tab active" onclick="loadTickets(null,this)">Tous</button>
+        <button class="filter-tab" onclick="loadTickets('en_attente',this)">⏳ En attente</button>
+        <button class="filter-tab" onclick="loadTickets('en_cours',this)">🔄 En cours</button>
+        <button class="filter-tab" onclick="loadTickets('valide',this)">✅ Validés</button>
+        <button class="filter-tab" onclick="loadTickets('refuse',this)">❌ Refusés</button>
       </div>
-
-      <!-- Table -->
       <div class="tickets-table">
         <div class="table-header">
-          <span>Référence</span>
-          <span>Utilisateur</span>
-          <span>Opérateur</span>
-          <span>Montant</span>
-          <span>Date</span>
-          <span>Actions</span>
+          <span>Référence</span><span>Email</span><span>Opérateur</span>
+          <span>Montant</span><span>Date</span><span>Actions</span>
         </div>
         <div id="ticketsList"></div>
       </div>
@@ -782,14 +391,14 @@
   </div>
 </div>
 
-<!-- ══ MODAL DÉTAIL ═══════════════════════════════════════════════════════════ -->
+<!-- ═══ MODAL ════════════════════════════════════════════════════════════════════ -->
 <div class="modal-overlay" id="ticketModal">
   <div class="modal">
-    <h3>Détail du ticket <span id="modal-ref" style="color:var(--accent)"></span></h3>
+    <h3>Ticket <span id="modal-ref" style="color:var(--accent)"></span></h3>
     <div id="modal-content"></div>
-    <div style="margin-top:16px">
+    <div style="margin-top:14px">
       <label>Message pour l'utilisateur (optionnel)</label>
-      <textarea id="modal-notes" placeholder="Ex: Ticket bien reçu et validé / Code incorrect, veuillez vérifier..."></textarea>
+      <textarea id="modal-notes" placeholder="Ex: Ticket validé avec succès / Code incorrect..."></textarea>
     </div>
     <div class="modal-actions">
       <button class="modal-btn modal-btn-validate" onclick="updateTicket('valide')">✅ Valider</button>
@@ -800,191 +409,154 @@
   </div>
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ─── State ────────────────────────────────────────────────────────────────────
+// ═══ STATE ════════════════════════════════════════════════════════════════════
 let currentTicketId = null;
 
-// ─── Navigation ──────────────────────────────────────────────────────────────
+// ═══ NAVIGATION ══════════════════════════════════════════════════════════════
 function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
   window.scrollTo(0, 0);
-  window.location.hash = name === 'home' ? '' : name;
-
-  if (name === 'admin') {
-    checkAdminAuth();
-  }
+  history.pushState(null, '', name === 'home' ? '/' : '/#' + name);
+  if (name === 'admin') checkAdminAuth();
 }
 
-// Hash routing au chargement et lors des changements
-function checkHash() {
-  const hash = window.location.hash.replace('#', '') || 'home';
-  if (['home','form','suivi','admin'].includes(hash)) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-    document.getElementById('page-' + hash).classList.add('active');
-    if (hash === 'admin') checkAdminAuth();
-  }
+function initPage() {
+  const hash = window.location.hash.replace('#', '');
+  const page = ['home','form','suivi','admin'].includes(hash) ? hash : 'home';
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  if (page === 'admin') checkAdminAuth();
 }
-window.addEventListener('hashchange', checkHash);
 
-// ─── Toast ────────────────────────────────────────────────────────────────────
+window.addEventListener('popstate', initPage);
+
+// ═══ TOAST ════════════════════════════════════════════════════════════════════
 function showToast(msg, type = 'success') {
   const t = document.getElementById('toast');
   t.textContent = (type === 'success' ? '✅ ' : '❌ ') + msg;
   t.className = 'toast show ' + type;
-  setTimeout(() => t.className = 'toast', 3500);
+  setTimeout(() => { t.className = 'toast'; }, 3500);
 }
 
-// ─── Submit Ticket ────────────────────────────────────────────────────────────
+// ═══ SOUMETTRE TICKET ════════════════════════════════════════════════════════
 async function submitTicket() {
   const btn = document.getElementById('submitBtn');
   const fields = {
-    userName: document.getElementById('userName').value.trim(),
-    userEmail: document.getElementById('userEmail').value.trim(),
-    userPhone: getFullPhone(),
-    operateur: document.getElementById('operateur').value,
-    montant: document.getElementById('montant').value,
-    devise: document.getElementById('devise').value,
-    codeTicket: document.getElementById('codeTicket').value.trim(),
+    userName:    document.getElementById('userName').value.trim(),
+    userEmail:   document.getElementById('userEmail').value.trim(),
+    userPhone:   getFullPhone(),
+    operateur:   document.getElementById('operateur').value,
+    montant:     document.getElementById('montant').value,
+    devise:      document.getElementById('devise').value,
+    codeTicket:  document.getElementById('codeTicket').value.trim().toUpperCase(),
     numeroserie: document.getElementById('numeroserie').value.trim()
   };
-
-  // Validation
-  if (!fields.userName) return showToast('Veuillez entrer votre nom', 'error');
+  if (!fields.userName)                          return showToast('Veuillez entrer votre nom', 'error');
   if (!fields.userEmail || !fields.userEmail.includes('@')) return showToast('Email invalide', 'error');
-  if (!fields.operateur) return showToast('Sélectionnez un opérateur', 'error');
-  if (!fields.montant) return showToast('Sélectionnez un montant', 'error');
-  if (!fields.codeTicket) return showToast('Entrez le code du ticket', 'error');
-  if (fields.codeTicket.length < 8) return showToast('Code ticket trop court', 'error');
+  if (!fields.operateur)                         return showToast('Sélectionnez un opérateur', 'error');
+  if (!fields.montant)                           return showToast('Sélectionnez un montant', 'error');
+  if (!fields.codeTicket)                        return showToast('Entrez le code du ticket', 'error');
+  if (fields.codeTicket.length < 6)             return showToast('Code ticket trop court', 'error');
 
   btn.disabled = true;
   btn.innerHTML = '<span class="spinner"></span> Envoi en cours...';
-
   try {
-    const res = await fetch('/api/tickets', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(fields)
-    });
+    const res  = await fetch('/api/tickets', { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(fields) });
     const data = await res.json();
-
     if (res.ok) {
       document.getElementById('form-main').style.display = 'none';
       document.getElementById('form-success').style.display = 'block';
       document.getElementById('successRef').textContent = '#' + data.reference;
     } else {
       showToast(data.error || 'Erreur lors de la soumission', 'error');
-      btn.disabled = false;
-      btn.textContent = 'Envoyer ma demande →';
+      btn.disabled = false; btn.textContent = 'Envoyer ma demande →';
     }
-  } catch (e) {
+  } catch(e) {
     showToast('Erreur de connexion', 'error');
-    btn.disabled = false;
-    btn.textContent = 'Envoyer ma demande →';
+    btn.disabled = false; btn.textContent = 'Envoyer ma demande →';
   }
 }
 
 function resetForm() {
   document.getElementById('form-main').style.display = 'block';
   document.getElementById('form-success').style.display = 'none';
-  document.getElementById('submitBtn').disabled = false;
-  document.getElementById('submitBtn').textContent = 'Envoyer ma demande →';
-  ['userName','userEmail','userPhone','codeTicket','numeroserie'].forEach(id => {
-    document.getElementById(id).value = '';
-  });
-  ['operateur','montant'].forEach(id => document.getElementById(id).selectedIndex = 0);
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = false; btn.textContent = 'Envoyer ma demande →';
+  ['userName','userEmail','userPhone','codeTicket','numeroserie'].forEach(id => { document.getElementById(id).value = ''; });
+  document.getElementById('operateur').selectedIndex = 0;
+  document.getElementById('montant').selectedIndex = 0;
   document.getElementById('devise').value = 'EUR';
 }
 
-// ─── Suivi ────────────────────────────────────────────────────────────────────
+// ═══ SUIVI ════════════════════════════════════════════════════════════════════
 async function suivreTicket() {
   const input = document.getElementById('suiviRef');
-  const ref = input.value.trim().toUpperCase();
-  input.value = ref; // force la valeur en majuscules
+  const ref   = input.value.trim().toUpperCase();
+  input.value = ref;
   if (!ref || ref.length < 4) return showToast('Entrez une référence valide', 'error');
 
-  const card = document.getElementById('statusResult');
+  const card    = document.getElementById('statusResult');
   const content = document.getElementById('statusContent');
-  content.innerHTML = '<div style="text-align:center;padding:20px"><span class="spinner" style="width:30px;height:30px;border-width:4px"></span></div>';
+  content.innerHTML = '<div style="text-align:center;padding:20px"><span class="spinner" style="width:28px;height:28px;border-width:3px"></span></div>';
   card.style.display = 'block';
 
   try {
-    const res = await fetch('/api/tickets/suivi/' + encodeURIComponent(ref));
+    const res  = await fetch('/api/tickets/suivi/' + encodeURIComponent(ref));
     const data = await res.json();
-
     if (!res.ok) {
-      content.innerHTML = `
-        <div style="text-align:center;padding:30px">
-          <div style="font-size:40px;margin-bottom:12px">🔍</div>
-          <p style="font-weight:700;margin-bottom:8px">Référence introuvable</p>
-          <p style="color:var(--muted);font-size:14px">Vérifiez la référence reçue par email.</p>
-        </div>`;
+      content.innerHTML = '<div style="text-align:center;padding:30px"><div style="font-size:36px;margin-bottom:12px">🔍</div><p style="font-weight:700;margin-bottom:8px">Référence introuvable</p><p style="color:var(--muted);font-size:13px">Vérifiez la référence reçue par email.</p></div>';
       return;
     }
-
     const badges = {
       en_attente: '<span class="status-badge badge-waiting">⏳ En attente</span>',
-      en_cours: '<span class="status-badge badge-processing">🔄 En cours de vérification</span>',
-      valide: '<span class="status-badge badge-valid">✅ Validé</span>',
-      refuse: '<span class="status-badge badge-refused">❌ Refusé</span>'
+      en_cours:   '<span class="status-badge badge-processing">🔄 En cours</span>',
+      valide:     '<span class="status-badge badge-valid">✅ Validé</span>',
+      refuse:     '<span class="status-badge badge-refused">❌ Refusé</span>'
     };
-
     content.innerHTML = `
-      <div style="margin-bottom:20px">${badges[data.statut] || data.statut}</div>
+      <div style="margin-bottom:18px">${badges[data.statut] || data.statut}</div>
       <div class="modal-info-row"><span>Référence</span><span>#${data.reference}</span></div>
       <div class="modal-info-row"><span>Opérateur</span><span>${data.operateur}</span></div>
       <div class="modal-info-row"><span>Montant</span><span>${data.montant} ${data.devise}</span></div>
       <div class="modal-info-row"><span>Soumis le</span><span>${new Date(data.createdAt).toLocaleString('fr-FR')}</span></div>
       <div class="modal-info-row" style="border:none"><span>Mis à jour</span><span>${new Date(data.updatedAt).toLocaleString('fr-FR')}</span></div>
-      ${data.notesAdmin ? `<div style="margin-top:16px;background:var(--surface2);padding:14px;border-radius:10px;border-left:3px solid var(--accent)">
-        <p style="color:var(--muted);font-size:12px;margin-bottom:6px">MESSAGE DE L'ADMINISTRATEUR</p>
-        <p style="font-size:14px">${data.notesAdmin}</p>
-      </div>` : ''}
+      ${data.notesAdmin ? `<div style="margin-top:14px;background:var(--surface2);padding:13px;border-radius:10px;border-left:3px solid var(--accent)"><p style="color:var(--muted);font-size:11px;margin-bottom:5px">MESSAGE ADMIN</p><p style="font-size:13px">${data.notesAdmin}</p></div>` : ''}
     `;
-  } catch (e) {
+  } catch(e) {
     content.innerHTML = '<p style="color:var(--error);text-align:center">Erreur de connexion</p>';
   }
 }
 
-// ─── Admin Auth ───────────────────────────────────────────────────────────────
+// ═══ ADMIN AUTH ═══════════════════════════════════════════════════════════════
 async function checkAdminAuth() {
   try {
-    const res = await fetch('/api/admin/check', { credentials: 'same-origin' });
+    const res  = await fetch('/api/admin/check', { credentials:'same-origin' });
     const data = await res.json();
-    if (data.isAdmin) {
-      showAdminDashboard();
-    } else {
-      showAdminLogin();
-    }
-  } catch(e) {
-    showAdminLogin();
-  }
+    if (data.isAdmin) showAdminDashboard();
+    else              showAdminLogin();
+  } catch(e) { showAdminLogin(); }
 }
 
 function showAdminLogin() {
-  document.getElementById('admin-login').style.display = 'block';
+  document.getElementById('admin-login').style.display     = 'block';
   document.getElementById('admin-dashboard').style.display = 'none';
 }
 
 async function adminLogin() {
   const pwd = document.getElementById('adminPassword').value;
   if (!pwd) return;
-
-  const btn = document.querySelector('#admin-login .submit-btn');
-  btn.disabled = true;
-  btn.textContent = 'Connexion...';
-
+  const btn = document.getElementById('loginBtn');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Connexion...';
   try {
     const res = await fetch('/api/admin/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      credentials: 'same-origin',
-      body: JSON.stringify({ password: pwd })
+      method:'POST', credentials:'same-origin',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ password: pwd })
     });
-
     if (res.ok) {
       document.getElementById('adminPassword').value = '';
       showAdminDashboard();
@@ -994,113 +566,103 @@ async function adminLogin() {
   } catch(e) {
     showToast('Erreur de connexion', 'error');
   } finally {
-    btn.disabled = false;
-    btn.textContent = 'Se connecter';
+    btn.disabled = false; btn.textContent = 'Se connecter';
   }
 }
 
 function showAdminDashboard() {
-  document.getElementById('admin-login').style.display = 'none';
+  document.getElementById('admin-login').style.display     = 'none';
   document.getElementById('admin-dashboard').style.display = 'block';
   loadTickets(null);
 }
 
 async function adminLogout() {
-  await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' });
+  await fetch('/api/admin/logout', { method:'POST', credentials:'same-origin' });
   showAdminLogin();
 }
 
-// ─── Admin Tickets ────────────────────────────────────────────────────────────
+// ═══ TICKETS LIST ═════════════════════════════════════════════════════════════
 async function loadTickets(statut, tabEl) {
   if (tabEl) {
     document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
     tabEl.classList.add('active');
   }
+  const ticketsList = document.getElementById('ticketsList');
+  ticketsList.innerHTML = '<div class="empty-state"><span class="spinner" style="width:28px;height:28px;border-width:3px"></span></div>';
 
-  const list = document.getElementById('ticketsList');
-  list.innerHTML = '<div class="empty-state"><span class="spinner" style="width:30px;height:30px;border-width:4px"></span></div>';
+  try {
+    const url = '/api/admin/tickets' + (statut ? '?statut=' + statut : '');
+    const res = await fetch(url, { credentials:'same-origin' });
+    if (res.status === 401) { showAdminLogin(); return; }
 
-  const url = '/api/admin/tickets' + (statut ? '?statut=' + statut : '');
-  const res = await fetch(url, { credentials: 'same-origin' });
+    const data = await res.json();
 
-  if (res.status === 401) {
-    showAdminLogin();
-    return;
-  }
+    // Stats
+    let total = 0, waiting = 0, valid = 0, refused = 0;
+    (data.stats || []).forEach(s => {
+      total += s.count;
+      if (s._id === 'en_attente' || s._id === 'en_cours') waiting += s.count;
+      if (s._id === 'valide')  valid   = s.count;
+      if (s._id === 'refuse')  refused = s.count;
+    });
+    document.getElementById('stat-total').textContent   = total;
+    document.getElementById('stat-waiting').textContent = waiting;
+    document.getElementById('stat-valid').textContent   = valid;
+    document.getElementById('stat-refused').textContent = refused;
 
-  const data = await res.json();
+    if (!data.tickets || !data.tickets.length) {
+      ticketsList.innerHTML = '<div class="empty-state"><div class="empty-icon">📭</div><p>Aucun ticket</p></div>';
+      return;
+    }
 
-  // Update stats
-  let total = 0, waiting = 0, valid = 0, refused = 0;
-  data.stats.forEach(s => {
-    total += s.count;
-    if (s._id === 'en_attente' || s._id === 'en_cours') waiting += s.count;
-    if (s._id === 'valide') valid = s.count;
-    if (s._id === 'refuse') refused = s.count;
-  });
-  document.getElementById('stat-total').textContent = total;
-  document.getElementById('stat-waiting').textContent = waiting;
-  document.getElementById('stat-valid').textContent = valid;
-  document.getElementById('stat-refused').textContent = refused;
+    const statusColors  = { en_attente:'#f5a623', en_cours:'#7c6dfa', valide:'#2ed47a', refuse:'#ff5a5a' };
+    const statusLabels  = { en_attente:'⏳ Attente', en_cours:'🔄 En cours', valide:'✅ Validé', refuse:'❌ Refusé' };
 
-  const list = document.getElementById('ticketsList');
-
-  if (!data.tickets.length) {
-    list.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div><p>Aucun ticket pour ce filtre</p></div>`;
-    return;
-  }
-
-  const statusColors = {
-    en_attente: '#f5a623', en_cours: '#7c6dfa', valide: '#2ed47a', refuse: '#ff5a5a'
-  };
-  const statusLabels = {
-    en_attente: '⏳ Attente', en_cours: '🔄 En cours', valide: '✅ Validé', refuse: '❌ Refusé'
-  };
-
-  list.innerHTML = data.tickets.map(t => `
-    <div class="ticket-row" onclick="openTicket('${t._id}')">
-      <span class="ticket-ref">#${t.reference}</span>
-      <span class="ticket-email">${t.userEmail}</span>
-      <span style="font-size:13px">${t.operateur}</span>
-      <span class="ticket-amount">${t.montant} ${t.devise}</span>
-      <span class="ticket-date">${new Date(t.createdAt).toLocaleDateString('fr-FR')}</span>
-      <div class="ticket-actions" onclick="event.stopPropagation()">
-        <span style="color:${statusColors[t.statut]};font-size:12px;font-weight:700">${statusLabels[t.statut]}</span>
-        <button class="action-btn btn-detail" onclick="openTicket('${t._id}')">Voir</button>
+    ticketsList.innerHTML = data.tickets.map(t => `
+      <div class="ticket-row" onclick="openTicket('${t._id}')">
+        <span class="ticket-ref">#${t.reference}</span>
+        <span class="ticket-email">${t.userEmail}</span>
+        <span style="font-size:12px">${t.operateur}</span>
+        <span class="ticket-amount">${t.montant} ${t.devise}</span>
+        <span class="ticket-date">${new Date(t.createdAt).toLocaleDateString('fr-FR')}</span>
+        <div class="ticket-actions" onclick="event.stopPropagation()">
+          <span style="color:${statusColors[t.statut]||'#888'};font-size:11px;font-weight:700;white-space:nowrap">${statusLabels[t.statut]||t.statut}</span>
+          <button class="action-btn btn-detail" onclick="event.stopPropagation();openTicket('${t._id}')">Voir</button>
+        </div>
       </div>
-    </div>
-  `).join('');
+    `).join('');
+  } catch(e) {
+    ticketsList.innerHTML = '<div class="empty-state"><p style="color:var(--error)">Erreur de chargement</p></div>';
+  }
 }
 
-// ─── Admin Modal ──────────────────────────────────────────────────────────────
+// ═══ MODAL TICKET ═════════════════════════════════════════════════════════════
 async function openTicket(id) {
   currentTicketId = id;
-  const res = await fetch('/api/admin/tickets/' + id, { credentials: 'same-origin' });
-  const t = await res.json();
-
-  document.getElementById('modal-ref').textContent = '#' + t.reference;
-  document.getElementById('modal-notes').value = t.notesAdmin || '';
-
-  const statusLabels = {
-    en_attente: '⏳ En attente', en_cours: '🔄 En cours', valide: '✅ Validé', refuse: '❌ Refusé'
-  };
-
-  document.getElementById('modal-content').innerHTML = `
-    <div class="modal-info-row"><span>Utilisateur</span><span>${t.userName}</span></div>
-    <div class="modal-info-row"><span>Email</span><span>${t.userEmail}</span></div>
-    <div class="modal-info-row"><span>Téléphone</span><span>${t.userPhone || 'Non fourni'}</span></div>
-    <div class="modal-info-row"><span>Opérateur</span><span>${t.operateur}</span></div>
-    <div class="modal-info-row"><span>Montant</span><span>${t.montant} ${t.devise}</span></div>
-    <div class="modal-info-row" style="background:rgba(124,109,250,0.05);padding:10px;border-radius:8px;border:none;margin:8px 0">
-      <span>Code ticket</span>
-      <span style="font-size:16px;letter-spacing:2px">${t.codeTicket}</span>
-    </div>
-    <div class="modal-info-row"><span>N° série</span><span>${t.numeroserie || '—'}</span></div>
-    <div class="modal-info-row"><span>Statut</span><span>${statusLabels[t.statut] || t.statut}</span></div>
-    <div class="modal-info-row" style="border:none"><span>Soumis le</span><span>${new Date(t.createdAt).toLocaleString('fr-FR')}</span></div>
-  `;
-
-  document.getElementById('ticketModal').classList.add('open');
+  try {
+    const res = await fetch('/api/admin/tickets/' + id, { credentials:'same-origin' });
+    if (res.status === 401) { showAdminLogin(); return; }
+    const t = await res.json();
+    document.getElementById('modal-ref').textContent   = '#' + t.reference;
+    document.getElementById('modal-notes').value       = t.notesAdmin || '';
+    const statusLabels = { en_attente:'⏳ En attente', en_cours:'🔄 En cours', valide:'✅ Validé', refuse:'❌ Refusé' };
+    document.getElementById('modal-content').innerHTML = `
+      <div class="modal-info-row"><span>Utilisateur</span><span>${t.userName}</span></div>
+      <div class="modal-info-row"><span>Email</span><span>${t.userEmail}</span></div>
+      <div class="modal-info-row"><span>Téléphone</span><span>${t.userPhone || 'Non fourni'}</span></div>
+      <div class="modal-info-row"><span>Opérateur</span><span>${t.operateur}</span></div>
+      <div class="modal-info-row"><span>Montant</span><span>${t.montant} ${t.devise}</span></div>
+      <div class="modal-info-row" style="background:rgba(124,109,250,0.06);padding:10px;border-radius:8px;border:none;margin:6px 0">
+        <span>Code ticket</span><span style="font-size:15px;letter-spacing:2px">${t.codeTicket}</span>
+      </div>
+      <div class="modal-info-row"><span>N° série</span><span>${t.numeroserie || '—'}</span></div>
+      <div class="modal-info-row"><span>Statut</span><span>${statusLabels[t.statut] || t.statut}</span></div>
+      <div class="modal-info-row" style="border:none"><span>Soumis le</span><span>${new Date(t.createdAt).toLocaleString('fr-FR')}</span></div>
+    `;
+    document.getElementById('ticketModal').classList.add('open');
+  } catch(e) {
+    showToast('Erreur chargement ticket', 'error');
+  }
 }
 
 function closeModal() {
@@ -1111,75 +673,57 @@ function closeModal() {
 async function updateTicket(statut) {
   if (!currentTicketId) return;
   const notes = document.getElementById('modal-notes').value.trim();
-
-  const res = await fetch('/api/admin/tickets/' + currentTicketId, {
-    method: 'PATCH',
-    headers: { 'Content-Type': 'application/json' },
-    credentials: 'same-origin',
-    body: JSON.stringify({ statut, notesAdmin: notes })
-  });
-
-  if (res.ok) {
-    const labels = { valide: 'Ticket validé ✅', refuse: 'Ticket refusé ❌', en_cours: 'Statut mis à jour 🔄' };
-    showToast(labels[statut] || 'Mis à jour', 'success');
-    closeModal();
-    loadTickets(null);
-  } else {
-    showToast('Erreur lors de la mise à jour', 'error');
+  try {
+    const res = await fetch('/api/admin/tickets/' + currentTicketId, {
+      method:'PATCH', credentials:'same-origin',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ statut, notesAdmin: notes })
+    });
+    if (res.ok) {
+      const labels = { valide:'Ticket validé ✅', refuse:'Ticket refusé ❌', en_cours:'Statut mis à jour 🔄' };
+      showToast(labels[statut] || 'Mis à jour', 'success');
+      closeModal();
+      loadTickets(null);
+    } else {
+      showToast('Erreur mise à jour', 'error');
+    }
+  } catch(e) {
+    showToast('Erreur de connexion', 'error');
   }
 }
 
-// Close modal on overlay click
 document.getElementById('ticketModal').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 
-// ─── Phone formatting ─────────────────────────────────────────────────────────
+// ═══ TÉLÉPHONE ════════════════════════════════════════════════════════════════
 function updatePhonePlaceholder() {
-  const country = document.getElementById('phoneCountry')?.value;
-  const input = document.getElementById('userPhone');
-  const hint = document.getElementById('phoneHint');
-  if (!input || !hint) return;
-  input.value = '';
-  if (country === 'FR') {
-    input.placeholder = '06 12 34 56 78';
-    hint.textContent = 'Format français : 06 12 34 56 78 (10 chiffres)';
-  } else {
-    input.placeholder = '(212) 555-1234';
-    hint.textContent = 'Format américain : (212) 555-1234';
-  }
+  const country = document.getElementById('phoneCountry').value;
+  const input   = document.getElementById('userPhone');
+  const hint    = document.getElementById('phoneHint');
+  input.value   = '';
+  if (country === 'FR') { input.placeholder = '06 12 34 56 78'; hint.textContent = 'Format : 06 12 34 56 78'; }
+  else                  { input.placeholder = '(212) 555-1234'; hint.textContent = 'Format : (212) 555-1234'; }
 }
 
 function formatPhone(input) {
-  const country = document.getElementById('phoneCountry')?.value || 'FR';
-  // Keep only digits
+  const country = document.getElementById('phoneCountry').value;
   let digits = input.value.replace(/\D/g, '');
-
   if (country === 'FR') {
-    // French: 06 12 34 56 78 — groups of 2
     digits = digits.slice(0, 10);
-    const parts = digits.match(/.{1,2}/g) || [];
-    input.value = parts.join(' ');
+    input.value = (digits.match(/.{1,2}/g) || []).join(' ');
   } else {
-    // US: (212) 555-1234
     digits = digits.slice(0, 10);
-    if (digits.length <= 3) {
-      input.value = digits.length ? '(' + digits : '';
-    } else if (digits.length <= 6) {
-      input.value = '(' + digits.slice(0,3) + ') ' + digits.slice(3);
-    } else {
-      input.value = '(' + digits.slice(0,3) + ') ' + digits.slice(3,6) + '-' + digits.slice(6);
-    }
+    if      (digits.length <= 3) input.value = digits.length ? '(' + digits : '';
+    else if (digits.length <= 6) input.value = '(' + digits.slice(0,3) + ') ' + digits.slice(3);
+    else                         input.value = '(' + digits.slice(0,3) + ') ' + digits.slice(3,6) + '-' + digits.slice(6);
   }
 }
 
-// Returns the full phone with country prefix for storage
 function getFullPhone() {
-  const country = document.getElementById('phoneCountry')?.value || 'FR';
-  const num = document.getElementById('userPhone')?.value.trim();
+  const country = document.getElementById('phoneCountry').value;
+  const num = document.getElementById('userPhone').value.trim();
   if (!num) return '';
-  const prefix = country === 'FR' ? '+33 ' : '+1 ';
-  // For FR, strip leading 0 when adding +33
   if (country === 'FR') {
     const clean = num.replace(/\s/g, '');
     return '+33 ' + (clean.startsWith('0') ? clean.slice(1) : clean);
@@ -1187,16 +731,13 @@ function getFullPhone() {
   return '+1 ' + num;
 }
 
-// ─── Auto-format ticket code ───────────────────────────────────────────────────
+// ═══ INIT ═════════════════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', () => {
-  const input = document.getElementById('codeTicket');
-  if (input) {
-    input.addEventListener('input', (e) => {
-      e.target.value = e.target.value.toUpperCase();
-    });
-  }
-  // Init hash routing
-  checkHash();
+  // Format code ticket en majuscules
+  const codeInput = document.getElementById('codeTicket');
+  if (codeInput) codeInput.addEventListener('input', e => { e.target.value = e.target.value.toUpperCase(); });
+  // Routing par hash
+  initPage();
 });
 </script>
 </body>
