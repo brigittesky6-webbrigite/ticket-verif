@@ -812,25 +812,23 @@ function showPage(name) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
   window.scrollTo(0, 0);
+  window.location.hash = name === 'home' ? '' : name;
 
   if (name === 'admin') {
     checkAdminAuth();
   }
 }
 
-// URL hash routing
+// Hash routing au chargement et lors des changements
 function checkHash() {
   const hash = window.location.hash.replace('#', '') || 'home';
   if (['home','form','suivi','admin'].includes(hash)) {
-    showPage(hash);
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + hash).classList.add('active');
+    if (hash === 'admin') checkAdminAuth();
   }
 }
 window.addEventListener('hashchange', checkHash);
-
-// Admin via /admin path
-if (window.location.pathname === '/admin') {
-  setTimeout(() => showPage('admin'), 100);
-}
 
 // ─── Toast ────────────────────────────────────────────────────────────────────
 function showToast(msg, type = 'success') {
@@ -953,30 +951,51 @@ async function suivreTicket() {
 
 // ─── Admin Auth ───────────────────────────────────────────────────────────────
 async function checkAdminAuth() {
-  const res = await fetch('/api/admin/check');
-  const data = await res.json();
-  if (data.isAdmin) {
-    showAdminDashboard();
-  } else {
-    document.getElementById('admin-login').style.display = 'block';
-    document.getElementById('admin-dashboard').style.display = 'none';
+  try {
+    const res = await fetch('/api/admin/check', { credentials: 'same-origin' });
+    const data = await res.json();
+    if (data.isAdmin) {
+      showAdminDashboard();
+    } else {
+      showAdminLogin();
+    }
+  } catch(e) {
+    showAdminLogin();
   }
+}
+
+function showAdminLogin() {
+  document.getElementById('admin-login').style.display = 'block';
+  document.getElementById('admin-dashboard').style.display = 'none';
 }
 
 async function adminLogin() {
   const pwd = document.getElementById('adminPassword').value;
   if (!pwd) return;
 
-  const res = await fetch('/api/admin/login', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ password: pwd })
-  });
+  const btn = document.querySelector('#admin-login .submit-btn');
+  btn.disabled = true;
+  btn.textContent = 'Connexion...';
 
-  if (res.ok) {
-    showAdminDashboard();
-  } else {
-    showToast('Mot de passe incorrect', 'error');
+  try {
+    const res = await fetch('/api/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify({ password: pwd })
+    });
+
+    if (res.ok) {
+      document.getElementById('adminPassword').value = '';
+      showAdminDashboard();
+    } else {
+      showToast('Mot de passe incorrect', 'error');
+    }
+  } catch(e) {
+    showToast('Erreur de connexion', 'error');
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Se connecter';
   }
 }
 
@@ -987,9 +1006,8 @@ function showAdminDashboard() {
 }
 
 async function adminLogout() {
-  await fetch('/api/admin/logout', { method: 'POST' });
-  document.getElementById('admin-login').style.display = 'block';
-  document.getElementById('admin-dashboard').style.display = 'none';
+  await fetch('/api/admin/logout', { method: 'POST', credentials: 'same-origin' });
+  showAdminLogin();
 }
 
 // ─── Admin Tickets ────────────────────────────────────────────────────────────
@@ -999,11 +1017,15 @@ async function loadTickets(statut, tabEl) {
     tabEl.classList.add('active');
   }
 
+  const list = document.getElementById('ticketsList');
+  list.innerHTML = '<div class="empty-state"><span class="spinner" style="width:30px;height:30px;border-width:4px"></span></div>';
+
   const url = '/api/admin/tickets' + (statut ? '?statut=' + statut : '');
-  const res = await fetch(url);
+  const res = await fetch(url, { credentials: 'same-origin' });
 
   if (res.status === 401) {
-    showPage('admin'); return;
+    showAdminLogin();
+    return;
   }
 
   const data = await res.json();
@@ -1053,7 +1075,7 @@ async function loadTickets(statut, tabEl) {
 // ─── Admin Modal ──────────────────────────────────────────────────────────────
 async function openTicket(id) {
   currentTicketId = id;
-  const res = await fetch('/api/admin/tickets/' + id);
+  const res = await fetch('/api/admin/tickets/' + id, { credentials: 'same-origin' });
   const t = await res.json();
 
   document.getElementById('modal-ref').textContent = '#' + t.reference;
@@ -1093,6 +1115,7 @@ async function updateTicket(statut) {
   const res = await fetch('/api/admin/tickets/' + currentTicketId, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
+    credentials: 'same-origin',
     body: JSON.stringify({ statut, notesAdmin: notes })
   });
 
@@ -1172,6 +1195,8 @@ document.addEventListener('DOMContentLoaded', () => {
       e.target.value = e.target.value.toUpperCase();
     });
   }
+  // Init hash routing
+  checkHash();
 });
 </script>
 </body>

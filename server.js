@@ -10,6 +10,9 @@ const path = require('path');
 
 const app = express();
 
+// ─── Trust Render's proxy (nécessaire pour les cookies sécurisés en HTTPS) ───
+app.set('trust proxy', 1);
+
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/ticket-verif';
 
 // ─── Security Middlewares ─────────────────────────────────────────────────────
@@ -39,7 +42,7 @@ app.use(session({
   cookie: {
     secure: process.env.NODE_ENV === 'production',
     httpOnly: true,
-    sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+    sameSite: process.env.NODE_ENV === 'production' ? 'lax' : 'lax',
     maxAge: 24 * 60 * 60 * 1000 // 24h en ms
   }
 }));
